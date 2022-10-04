@@ -23,7 +23,12 @@ const Settings = () => {
   
 	const getNumbers = async () => {
 		const response = await axios.get('https://www.random.org/sequences/?min=1&max=8&col=1&format=plain&rnd=new');
-		return response.data.split('\n').map((el) => Number(el));
+		return response.data.split('\n').map((el) => {
+			/* if (el !== '') {
+				return  Number(el);
+			} */
+			return el !== '' ? Number(el) : 2;
+		});
 	}
 
 	const handleLinesCount = (e) => {
