@@ -2,8 +2,7 @@ import Chart from '../components/chart';
 
 const ViewMode = () => {
 	return (
-		<div className="row">
-			<Chart />
+		<div className="d-flex flex-wrap justify-content-center">
 			<Chart />
 			<Chart />
 		</div>
