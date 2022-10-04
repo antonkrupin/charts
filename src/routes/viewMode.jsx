@@ -10,7 +10,7 @@ const ViewMode = () => {
 		<>
 		<AlertMessage />
 		<div className="d-flex flex-wrap justify-content-center">
-			{ charts.map((chart) => <Chart key={chart.id} options={chart.options}/>) }
+			{ charts.map((chart) => <Chart key={chart.id} options={chart.options} />) }
 		</div>
 		</>
 	)
