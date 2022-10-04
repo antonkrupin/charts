@@ -1,5 +1,13 @@
+import Chart from '../components/chart';
+
 const ViewMode = () => {
-	return <h2>View Mode</h2>
+	return (
+		<>
+			<Chart />
+			<Chart />
+			<Chart />
+		</>
+	)
 }
 
 export default ViewMode;
