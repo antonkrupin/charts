@@ -26,7 +26,11 @@ const Chart = () => {
 			}
 		]
 	};
-	return <HighchartsReact highcharts={Highcharts} options={options} />
+	return (
+		<div className="col-4">
+			<HighchartsReact highcharts={Highcharts} options={options} />
+		</div>
+	)
 }
 
 export default Chart;
