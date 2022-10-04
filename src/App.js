@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
-import { Button, Navbar, Nav } from 'react-bootstrap';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { Nav } from 'react-bootstrap';
 import ViewMode from './routes/viewMode';
 import Settings from './routes/settings';
 import Page404 from './routes/page404';
