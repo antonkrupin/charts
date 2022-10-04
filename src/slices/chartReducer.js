@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import { createSlice } from '@reduxjs/toolkit';
-import { charts } from 'highcharts';
 
 const initialState = {
 	charts: [],
