@@ -9,12 +9,12 @@ import './App.css';
 
 const App = () => (
 	<BrowserRouter>
-		<Navbar bg="light" expand="lg">
-			<Nav className="mr-atuo">
+		<Nav className="mr-auto justify-content-center" expand="lg">
+			<Nav.Item>
 				<Nav.Link as={Link} to="/viewmode">View Mode</Nav.Link>
-				<Nav.Link as={Link} to="/settings">Settings</Nav.Link>
-			</Nav>
-		</Navbar>
+			</Nav.Item>
+			<Nav.Link as={Link} to="/settings">Settings</Nav.Link>
+		</Nav>
 		<Routes>
 			<Route path="/" element={<ViewMode/>} />
 			<Route path="viewmode" element={<ViewMode />} />
