@@ -30,11 +30,15 @@ const chartSlice = createSlice({
 				}
 			})
 		},
-		updateChart: (state) => {
-
+		updateChart: (state, action) => {
+			
 		},
-		deleteChart: (state) => {
-
+		deleteChart: (state, action) => {
+			state.charts.forEach((el, index) => {
+				if (el.id === action.payload) {
+					state.charts.splice(index, 1);
+				}
+			})
 		},
 	},
 });
