@@ -11,10 +11,11 @@ const chartSlice = createSlice({
 	reducers: {
 		addChart: (state, action) => {
 			const id = _.uniqueId();
-			const { title, type, lines } = action.payload;
+			const { title, type, chartData, linesName } = action.payload;
 			const series = [];
-			lines.forEach((line, index) => {
-				series.push({name:`${index}`, data:line});
+			chartData.forEach((line, index) => {
+				const temp = linesName[index];
+				series.push({name:`${temp}`, data:line});
 			})
 			state.charts.push({
 				id,
