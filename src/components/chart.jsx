@@ -1,5 +1,7 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
@@ -26,9 +28,16 @@ const Chart = () => {
 			}
 		]
 	};
+
+	const charts = useSelector((state) => state.chart.charts);
+	const dispatch = useDispatch();
+	const location = useLocation();
+	
 	return (
-		<div className="col-4">
+		<div className="flex-column m-1 border border-primary rounded">
 			<HighchartsReact highcharts={Highcharts} options={options} />
+			<Button className="m-2" variant="info">Change</Button>
+			<Button className="m-2" variant="danger">Delete</Button>
 		</div>
 	)
 }
