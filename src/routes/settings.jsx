@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Button, Modal, Form, InputGroup } from 'react-bootstrap';
@@ -7,9 +7,12 @@ import { addChart, updateChart, deleteChart } from '../slices/chartReducer';
 import Chart from '../components/chart';
 import AlertMessage from '../components/alert';
 import ColorPicker from '../components/colorPicker';
+import { add } from 'lodash';
 
 const Settings = () => {
 	const charts = useSelector((state) => state.chart.charts);
+
+	// const ref = useRef(null);
 
 	const dispatch = useDispatch();
 
@@ -20,23 +23,33 @@ const Settings = () => {
 	const [type, setChartType] = useState('');
 
 	const [lines, setLinesCount] = useState([]);
+
+	const [chartData, setChartData] = useState([]);
+
+	const [linesName, setLinesName] = useState([]);
   
 	const getNumbers = async () => {
 		const response = await axios.get('https://www.random.org/sequences/?min=1&max=8&col=1&format=plain&rnd=new');
-		return response.data.split('\n').map((el) => {
-			/* if (el !== '') {
-				return  Number(el);
-			} */
-			return el !== '' ? Number(el) : 2;
-		});
+		return response.data.split('\n').filter((el) => el !== '').map((el) => Number(el));
+	}
+
+	const handleLinesName = (e) => {
+		const copy =  Object.assign([], linesName);
+		copy.push(e.target.value);
+		setLinesName(copy);
 	}
 
 	const handleLinesCount = (e) => {
 		const linesCount = Number(e.target.value);
 		const linesValues = [];
+		const result = [];
 		for (let i = 0; i < linesCount; i += 1) {
-			getNumbers().then((numbers) => linesValues.push(numbers));
+			linesValues.push('1');
+			result.push(getNumbers());
 		}
+		Promise.all(result).then((data) => {
+			setChartData(data);
+		});
 		setLinesCount(linesValues);
 	}
 
@@ -50,7 +63,8 @@ const Settings = () => {
 
   const handleClose = () => {
 		getNumbers();
-		dispatch(addChart({title, type, lines}));
+		setLinesCount([]);
+		dispatch(addChart({title, type, chartData, linesName}));
 		setShow(false)
 	};
   const handleShow = () => setShow(true);
@@ -62,7 +76,7 @@ const Settings = () => {
 				<Button variant="primary" onClick={handleShow} >Add chart</Button>
 			</div>
 			<div className="row">
-				{ charts.map((chart) => <Chart key={chart.id} options={chart.options}/>) }
+				{ charts.map((chart) => <Chart key={chart.id} options={chart.options} id={chart.id}/>) }
 			</div>
 			<Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -89,7 +103,10 @@ const Settings = () => {
 							/>
 						</InputGroup>
 						{
-							lines.map((line, index) => <InputGroup key={index} className="mb-3"><Form.Control placeholder='Enter line name' /></InputGroup>)
+							lines.map((line, index) => 
+							<InputGroup key={index} className="mb-3">
+								<Form.Control onBlur={handleLinesName} placeholder='Enter line name' />
+							</InputGroup>)
 						}
 						
 					</Form>
@@ -98,7 +115,7 @@ const Settings = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button id="addBtn" variant="primary" onClick={handleClose} >
             Add Chart
           </Button>
         </Modal.Footer>
