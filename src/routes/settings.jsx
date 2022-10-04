@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import { addChart, updateChart, deleteChart } from '../slices/chartReducer';
 import { Button, Modal, Form, InputGroup } from 'react-bootstrap';
+
+import { addChart, updateChart, deleteChart } from '../slices/chartReducer';
 import Chart from '../components/chart';
 import AlertMessage from '../components/alert';
+import ColorPicker from '../components/colorPicker';
 
 const Settings = () => {
 	const charts = useSelector((state) => state.chart.charts);
@@ -17,9 +19,20 @@ const Settings = () => {
 
 	const [type, setChartType] = useState('');
 
+	const [lines, setLinesCount] = useState([]);
+  
 	const getNumbers = async () => {
-		const response = await axios.get('https://www.random.org/sequences/?min=1&max=25&col=1&format=plain&rnd=new');
-		console.log(response.data.split('\n'));
+		const response = await axios.get('https://www.random.org/sequences/?min=1&max=8&col=1&format=plain&rnd=new');
+		return response.data.split('\n').map((el) => Number(el));
+	}
+
+	const handleLinesCount = (e) => {
+		const linesCount = Number(e.target.value);
+		const linesValues = [];
+		for (let i = 0; i < linesCount; i += 1) {
+			getNumbers().then((numbers) => linesValues.push(numbers));
+		}
+		setLinesCount(linesValues);
 	}
 
 	const handleInput = (e) => {
@@ -32,7 +45,7 @@ const Settings = () => {
 
   const handleClose = () => {
 		getNumbers();
-		dispatch(addChart({title, type}));
+		dispatch(addChart({title, type, lines}));
 		setShow(false)
 	};
   const handleShow = () => setShow(true);
@@ -58,12 +71,22 @@ const Settings = () => {
 								aria-label="chartName"
 							/>
 						</InputGroup>
-						<Form.Select aria-label="Select Chart Type" onChange={handleSetType}>
+						<Form.Select className="mb-3" aria-label="Select Chart Type" onChange={handleSetType}>
 							<option>Select Chart Type</option>
 							<option>line</option>
 							<option>spline</option>
 							<option>area</option>
 						</Form.Select>
+						<InputGroup className="mb-3" onChange={handleLinesCount}>
+							<Form.Control
+								placeholder="Enter Lines Count (max 10)"
+								aria-label="linesCount"
+							/>
+						</InputGroup>
+						{
+							lines.map((line, index) => <InputGroup key={index} className="mb-3"><Form.Control placeholder='Enter line name' /></InputGroup>)
+						}
+						
 					</Form>
 				</Modal.Body>
         <Modal.Footer>
@@ -105,5 +128,12 @@ const options = {
 			}
 		]
 	};
+
+	import { HexColorPicker } from "react-colorful";
+import "react-colorful/dist/index.css";
+const YourComponent = () => {
+  const [color, setColor] = useState("#aabbcc");
+  return <HexColorPicker color={color} onChange={setColor} />;
+};
 
 */
