@@ -24,7 +24,7 @@ const chartSlice = createSlice({
 					series: [
 						{	
 							name: 'First',
-							data: [1, 2, 1, 4, 3, 6],
+							data: [1, 2, 1, 4, 3, 6,20,15,33],
 						},
 						{
 							name: 'Second',

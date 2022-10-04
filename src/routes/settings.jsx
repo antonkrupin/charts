@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 import { addChart, updateChart, deleteChart } from '../slices/chartReducer';
 import { Button, Modal, Form, InputGroup } from 'react-bootstrap';
 import Chart from '../components/chart';
@@ -16,6 +17,11 @@ const Settings = () => {
 
 	const [type, setChartType] = useState('');
 
+	const getNumbers = async () => {
+		const response = await axios.get('https://www.random.org/sequences/?min=1&max=25&col=1&format=plain&rnd=new');
+		console.log(response.data.split('\n'));
+	}
+
 	const handleInput = (e) => {
 		setChartName(e.target.value);
 	} 
@@ -25,6 +31,7 @@ const Settings = () => {
 	}
 
   const handleClose = () => {
+		getNumbers();
 		dispatch(addChart({title, type}));
 		setShow(false)
 	};
