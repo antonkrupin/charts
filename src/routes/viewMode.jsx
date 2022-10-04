@@ -1,10 +1,13 @@
+import { useSelector } from 'react-redux';
+
 import Chart from '../components/chart';
 
 const ViewMode = () => {
+	const charts = useSelector((state) => state.chart.charts);
+	
 	return (
 		<div className="d-flex flex-wrap justify-content-center">
-			<Chart />
-			<Chart />
+			{ charts.map((chart) => <Chart key={chart.id} options={chart.options}/>) }
 		</div>
 	)
 }
