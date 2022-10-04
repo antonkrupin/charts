@@ -95,6 +95,7 @@ const Settings = () => {
 							<option>line</option>
 							<option>spline</option>
 							<option>area</option>
+							<option>bar</option>
 						</Form.Select>
 						<InputGroup className="mb-3" onChange={handleLinesCount}>
 							<Form.Control
