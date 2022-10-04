@@ -11,7 +11,11 @@ const chartSlice = createSlice({
 	reducers: {
 		addChart: (state, action) => {
 			const id = _.uniqueId();
-			const { title, type } = action.payload;
+			const { title, type, lines } = action.payload;
+			const series = [];
+			lines.forEach((line, index) => {
+				series.push({name:`${index}`, data:line});
+			})
 			state.charts.push({
 				id,
 				options: {
@@ -21,20 +25,7 @@ const chartSlice = createSlice({
 					title: {
 						text: title,
 					},
-					series: [
-						{	
-							name: 'First',
-							data: [1, 2, 1, 4, 3, 6,20,15,33],
-						},
-						{
-							name: 'Second',
-							data: [2, 4, 5, 1, 8, 9],
-						},
-						{
-							name: 'Third',
-							data: [0, 10, 2, 1, 10, 12],
-						}
-					]
+					series: series,
 				}
 			})
 		},
