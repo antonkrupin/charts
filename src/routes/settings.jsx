@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addChart, updateChart, deleteChart } from '../slices/chartReducer';
 import { Button, Modal, Form, InputGroup } from 'react-bootstrap';
 import Chart from '../components/chart';
+import AlertMessage from '../components/alert';
 
 const Settings = () => {
 	const charts = useSelector((state) => state.chart.charts);
@@ -31,8 +32,10 @@ const Settings = () => {
 
 	return (
 		<>
-			<h4>Settings</h4>
-			<Button variant="primary" onClick={handleShow} >Add chart</Button>
+			<AlertMessage />
+			<div className="d-flex justify-content-center m-5">
+				<Button variant="primary" onClick={handleShow} >Add chart</Button>
+			</div>
 			<div className="row">
 				{ charts.map((chart) => <Chart key={chart.id} options={chart.options}/>) }
 			</div>
