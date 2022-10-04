@@ -1,6 +1,4 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
