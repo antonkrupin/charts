@@ -15,6 +15,7 @@ const CreationDateFilter = () => {
 	
 	return (
 		<>
+			<h6>Filter by date</h6>
 			<Form>
 				<Form.Select className="mb-3" aria-label="Filter by Creation Date" onChange={handleDateFilter}>
 					<option>select date</option>
