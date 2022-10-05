@@ -25,7 +25,7 @@ const Chart = (props) => {
 		)
 	}
 	return (
-		<div className="flex-column m-1 border border-primary rounded">
+		<div className="flex-column m-1 border border-primary">
 			<HighchartsReact highcharts={Highcharts} options={options} />
 			{ buttons }
 		</div>
