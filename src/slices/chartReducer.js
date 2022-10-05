@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
 	charts: [],
+	creationDates: [],
+	chartsFilteredByDate: [],
 }
 
 const chartSlice = createSlice({
@@ -11,14 +13,16 @@ const chartSlice = createSlice({
 	reducers: {
 		addChart: (state, action) => {
 			const id = _.uniqueId();
-			const { title, type, chartData, linesName } = action.payload;
+			const { title, type, chartData, linesName, date } = action.payload;
 			const series = [];
 			chartData.forEach((line, index) => {
 				const temp = linesName[index];
 				series.push({name:`${temp}`, data:line});
 			})
+			state.creationDates.push(date);
 			state.charts.push({
 				id,
+				date,
 				options: {
 					chart: {
 						type: type,
@@ -29,6 +33,9 @@ const chartSlice = createSlice({
 					series: series,
 				}
 			})
+		},
+		filterChartsByDate: (state, action) => {
+
 		},
 		updateChart: (state, action) => {
 			
@@ -43,7 +50,7 @@ const chartSlice = createSlice({
 	},
 });
 
-export const { addChart, updateChart, deleteChart } = chartSlice.actions;
+export const { addChart, filterChartsByDate, updateChart, deleteChart } = chartSlice.actions;
 
 export default chartSlice.reducer;
 
