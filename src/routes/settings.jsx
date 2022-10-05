@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Modal, Form, InputGroup } from 'react-bootstrap';
 
@@ -7,11 +8,12 @@ import { addChart, updateChart, deleteChart } from '../slices/chartReducer';
 import Chart from '../components/chart';
 import AlertMessage from '../components/alert';
 import ColorPicker from '../components/colorPicker';
-import { add } from 'lodash';
+import DateSelector from '../components/datePicker';
 
 const Settings = () => {
 	const charts = useSelector((state) => state.chart.charts);
 
+	const location = useLocation().pathname;
 	// const ref = useRef(null);
 
 	const dispatch = useDispatch();
@@ -27,6 +29,12 @@ const Settings = () => {
 	const [chartData, setChartData] = useState([]);
 
 	const [linesName, setLinesName] = useState([]);
+
+	const [date, setDate] = useState('');
+
+	const handleDate = (e) => {
+		setDate(e.target.value);
+	}
   
 	const getNumbers = async () => {
 		const response = await axios.get('https://www.random.org/sequences/?min=1&max=8&col=1&format=plain&rnd=new');
@@ -62,11 +70,17 @@ const Settings = () => {
 	}
 
   const handleClose = () => {
+		setShow(false);
+	};
+
+	const handleCreateChart = () => {
+		// const date = new Date().toLocaleDateString();
+		// console.log(date);
 		getNumbers();
 		setLinesCount([]);
-		dispatch(addChart({title, type, chartData, linesName}));
-		setShow(false)
-	};
+		dispatch(addChart({title, type, chartData, linesName, date}));
+		setShow(false);
+	}
   const handleShow = () => setShow(true);
 
 	return (
@@ -76,7 +90,7 @@ const Settings = () => {
 				<Button variant="primary" onClick={handleShow} >Add chart</Button>
 			</div>
 			<div className="row">
-				{ charts.map((chart) => <Chart key={chart.id} options={chart.options} id={chart.id}/>) }
+				{ charts.map((chart) => <Chart key={chart.id} options={chart.options} id={chart.id} location={location}/>) }
 			</div>
 			<Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -88,6 +102,12 @@ const Settings = () => {
 							<Form.Control
 								placeholder="Enter Chart Name"
 								aria-label="chartName"
+							/>
+						</InputGroup>
+						<InputGroup className="mb-3" onChange={handleDate}>
+							<Form.Control
+								placeholder="Enter Chart Creation Date"
+								aria-label="chartDate"
 							/>
 						</InputGroup>
 						<Form.Select className="mb-3" aria-label="Select Chart Type" onChange={handleSetType}>
@@ -117,7 +137,7 @@ const Settings = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button id="addBtn" variant="primary" onClick={handleClose} >
+          <Button id="addBtn" variant="primary" onClick={handleCreateChart} >
             Add Chart
           </Button>
         </Modal.Footer>
