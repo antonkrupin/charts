@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Form } from 'react-bootstrap';
 
-import { addChart, updateChart, deleteChart } from '../slices/chartReducer';
+import { filterChartsByDate } from '../slices/chartReducer';
 
 const CreationDateFilter = () => {
 	const creationDates = useSelector((state) => state.chart.creationDates);
@@ -9,14 +9,15 @@ const CreationDateFilter = () => {
 	const dispatch = useDispatch();
 
 	const handleDateFilter = (e) => {
-		console.log(e.target.value);
+		const date = e.target.value;
+		dispatch(filterChartsByDate({date}));
 	}
 	
 	return (
 		<>
 			<Form>
 				<Form.Select className="mb-3" aria-label="Filter by Creation Date" onChange={handleDateFilter}>
-				<option>Filter by Date</option>
+					<option>select date</option>
 					{ creationDates.map((date, index) => <option key={index}>{date}</option>)}
 				</Form.Select>			
 			</Form>
