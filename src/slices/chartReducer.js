@@ -19,7 +19,9 @@ const chartSlice = createSlice({
 				const temp = linesName[index];
 				series.push({name:`${temp}`, data:line});
 			})
-			state.creationDates.push(date);
+			if (state.creationDates.indexOf(date) === -1) {
+				state.creationDates.push(date);
+			}
 			state.charts.push({
 				id,
 				date,
@@ -33,6 +35,9 @@ const chartSlice = createSlice({
 					series: series,
 				}
 			})
+		},
+		addDate: (state, action) => {
+			console.log(action.payload);
 		},
 		filterChartsByDate: (state, action) => {
 			const { date } = action.payload;
@@ -56,7 +61,7 @@ const chartSlice = createSlice({
 	},
 });
 
-export const { addChart, filterChartsByDate, updateChart, deleteChart } = chartSlice.actions;
+export const { addChart, addDate, filterChartsByDate, updateChart, deleteChart } = chartSlice.actions;
 
 export default chartSlice.reducer;
 
