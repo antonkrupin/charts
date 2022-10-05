@@ -5,7 +5,7 @@ const AlertMessage = () => {
 	const charts = useSelector((state) => state.chart.charts);
 	
 	if (charts.length === 0) {
-		return ( <Alert variant="warning">
+		return ( <Alert className="text-center" variant="warning" >
 			You have no Charts. To add Chart - click button "Add chart"
 		</Alert>
 		)
