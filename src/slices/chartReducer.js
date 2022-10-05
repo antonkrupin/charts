@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 
 const initialState = {
 	charts: [],
@@ -35,7 +35,13 @@ const chartSlice = createSlice({
 			})
 		},
 		filterChartsByDate: (state, action) => {
-
+			const { date } = action.payload;
+			state.chartsFilteredByDate = [];
+			state.charts.forEach((el, index) => {
+				if (el.date === date) {
+					state.chartsFilteredByDate.push(state.charts[index]);
+				}
+			});
 		},
 		updateChart: (state, action) => {
 			
