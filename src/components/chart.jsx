@@ -4,30 +4,30 @@ import { Button } from 'react-bootstrap';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
-import { addChart, updateChart, deleteChart } from '../slices/chartReducer';
+import { changeDeleteModalShow, changeUdateModalShow, deleteChart } from '../slices/chartReducer';
+import DeleteModal from './modals/deleteChart';
+import ChangeModal from './modals/changeChart';
 
 const Chart = (props) => {
-	const { location, options } = props;
+	const { location, options, id } = props;
 
 	const dispatch = useDispatch();
-
-	const handleSomething = () => {
-		dispatch(deleteChart(props.id));
-	}
-
-	let buttons;
+	const updatingChart = useSelector((state) => state.chart.updatedChart);
+	let changeAndDeleteButtons;
 	if (location === '/settings') {
-		buttons = (
+		changeAndDeleteButtons = (
 			<>
-			<Button className="m-2" variant="info">Change</Button>
-			<Button onClick={handleSomething} className="m-2" variant="danger">Delete</Button>
+			<Button onClick={() => dispatch(changeUdateModalShow({id}))} className="m-2" variant="info">Change</Button>
+			<Button onClick={() => dispatch(changeDeleteModalShow())} className="m-2" variant="danger">Delete</Button>
 			</>
 		)
 	}
 	return (
 		<div className="flex-column m-1 border border-primary">
 			<HighchartsReact highcharts={Highcharts} options={options} />
-			{ buttons }
+			{ changeAndDeleteButtons }
+			<DeleteModal id={id} />
+			<ChangeModal />
 		</div>
 	)
 }
