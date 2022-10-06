@@ -13,8 +13,15 @@ const CreationDateFilter = () => {
 		dispatch(filterChartsByDate({date}));
 	}
 	
-	return (
-		<>
+	let dateFilter;
+	if (creationDates.length === 0) {
+		dateFilter = (
+			<>
+			</>
+		)
+	} else {
+		dateFilter = (
+			<>
 			<h6>Filter by date</h6>
 			<Form>
 				<Form.Select className="mb-3" aria-label="Filter by Creation Date" onChange={handleDateFilter}>
@@ -22,6 +29,13 @@ const CreationDateFilter = () => {
 					{ creationDates.map((date, index) => <option key={index}>{date}</option>)}
 				</Form.Select>			
 			</Form>
+		</>
+		)
+	}
+
+	return (
+		<>
+			{dateFilter}
 		</>
 	)
 };
