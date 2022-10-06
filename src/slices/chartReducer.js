@@ -56,7 +56,9 @@ const chartSlice = createSlice({
 					series: series,
 				}
 			})
-			state.updatedChart = state.charts[0];
+			if (state.updatedChart === '') {
+				state.updatedChart = state.charts[0];
+			}
 		},
 		addDate: (state, action) => {
 			console.log(action.payload);
@@ -82,6 +84,7 @@ const chartSlice = createSlice({
 		deleteChart: (state, action) => {
 			state.charts.forEach((chart, index) => {
 				if (chart.id === action.payload) {
+					console.log(current(state.charts[index]));
 					state.charts.splice(index, 1);
 				}
 			})
