@@ -12,11 +12,11 @@ const ViewMode = () => {
 
 	const chartsFilteredByDate = useSelector((state) => state.chart.chartsFilteredByDate);
 
-	let test;
+	let chartsToRender;
 	if (chartsFilteredByDate.length === 0) {
-		test = charts;
+		chartsToRender = charts;
 	} else {
-		test = chartsFilteredByDate;
+		chartsToRender = chartsFilteredByDate;
 	}
 	// разобраться с ключем key при фильтрации
 	return (
@@ -24,7 +24,7 @@ const ViewMode = () => {
 		<AlertMessage />
 		<CreationDateFilter />
 		<div className="d-flex flex-wrap justify-content-center">
-			{ test.map((chart, index) => <Chart key={index} options={chart.options} location={location}/>) }
+			{ chartsToRender.map((chart, index) => <Chart key={index} options={chart.options} location={location}/>) }
 		</div>
 		</>
 	)
