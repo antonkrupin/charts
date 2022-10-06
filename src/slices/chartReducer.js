@@ -5,12 +5,33 @@ const initialState = {
 	charts: [],
 	creationDates: [],
 	chartsFilteredByDate: [],
+	isModalShow: false,
+	isDeleteModalShow: false,
+	isUpdateModalShow: false,
+	updatedChart: '',
 }
 
 const chartSlice = createSlice({
 	name: 'chart',
 	initialState,
 	reducers: {
+		changeModalShow: (state) => {
+			state.isModalShow = !state.isModalShow;
+		},
+		changeDeleteModalShow: (state) => {
+			state.isDeleteModalShow = !state.isDeleteModalShow;
+		},
+		changeUdateModalShow: (state, action) => {
+			if (action.payload !== undefined) {
+				const { id } = action.payload
+				state.charts.forEach((chart, index) => {
+					if (chart.id === id) {
+						state.updatedChart = chart;
+					}
+				})
+			}
+			state.isUpdateModalShow = !state.isUpdateModalShow;
+		},
 		addChart: (state, action) => {
 			const id = _.uniqueId();
 			const { title, type, chartData, linesName, date } = action.payload;
@@ -35,6 +56,7 @@ const chartSlice = createSlice({
 					series: series,
 				}
 			})
+			state.updatedChart = state.charts[0];
 		},
 		addDate: (state, action) => {
 			console.log(action.payload);
@@ -49,11 +71,17 @@ const chartSlice = createSlice({
 			});
 		},
 		updateChart: (state, action) => {
-			
+			const { id, options } = action.payload;
+			console.log(id);
+			state.charts.forEach((chart, index) => {
+				if (chart.id === id) {
+					chart.options = options;
+				}
+			})
 		},
 		deleteChart: (state, action) => {
-			state.charts.forEach((el, index) => {
-				if (el.id === action.payload) {
+			state.charts.forEach((chart, index) => {
+				if (chart.id === action.payload) {
 					state.charts.splice(index, 1);
 				}
 			})
@@ -61,36 +89,15 @@ const chartSlice = createSlice({
 	},
 });
 
-export const { addChart, addDate, filterChartsByDate, updateChart, deleteChart } = chartSlice.actions;
+export const { 
+	changeModalShow,
+	changeDeleteModalShow,
+	changeUdateModalShow,
+	addChart,
+	addDate,
+	filterChartsByDate, 
+	updateChart,
+	deleteChart
+} = chartSlice.actions;
 
 export default chartSlice.reducer;
-
-/*
-
-const options = {
-		chart: {
-			type: 'spline'
-		},
-		title: {
-			text: 'My chart'
-		},
-		series: [
-			{	
-				name: 'First',
-				data: [1, 2, 1, 4, 3, 6],
-			},
-			{
-				name: 'Second',
-				data: [2, 4, 5, 1, 8, 9],
-			},
-			{
-				name: 'Third',
-				data: [0, 10, 2, 1, 10, 12],
-			}
-		]
-	};
-
-	charts = [{id, type, title}],
-	chartsData = [{id, lines: {name, data:[]}}]
-
-*/
