@@ -4,12 +4,13 @@ import axios from 'axios';
 import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 import DatePicker from 'react-date-picker';
 
-import { addChart, changeModalShow, updateChart, deleteChart } from '../../slices/chartReducer';
+import { addChart } from '../../slices/chartReducer';
+import { addChartModalShow } from '../../slices/modalsReducer';
 
 const AddChartModal = () => {
 	const dispatch = useDispatch();
   
-	const isModalShow = useSelector((state) => state.chart.isModalShow);
+	const isAddChartModalShow = useSelector((state) => state.modals.isAddChartModalShow);
 
 	const [title, setChartName] = useState('');
 
@@ -55,11 +56,11 @@ const AddChartModal = () => {
 		const date = creationDate.toLocaleDateString()
 		setCreationDate(new Date());
 		dispatch(addChart({title, type, chartData, linesName, date}));
-		dispatch(changeModalShow());
+		dispatch(addChartModalShow());
 	}
 
   return (
-    <Modal show={isModalShow} onHide={() => dispatch(changeModalShow())}>
+    <Modal show={isAddChartModalShow} onHide={() => dispatch(addChartModalShow())}>
       <Modal.Header closeButton>
         <Modal.Title>Create Chart</Modal.Title>
       </Modal.Header>
@@ -109,7 +110,7 @@ const AddChartModal = () => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => dispatch(changeModalShow())}>
+        <Button variant="secondary" onClick={() => dispatch(addChartModalShow())}>
           Close
         </Button>
         <Button id="addBtn" className="disabled" variant="primary" onClick={handleCreateChart}>
