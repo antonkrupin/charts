@@ -21,15 +21,15 @@ const CreationDateFilter = () => {
 		)
 	} else {
 		dateFilter = (
-			<>
-			<h6>Filter by date</h6>
+			<div className="d-flex align-items-center">
+			<h6 className="m-2">Filter by date</h6>
 			<Form>
-				<Form.Select className="mb-3" aria-label="Filter by Creation Date" onChange={handleDateFilter}>
+				<Form.Select aria-label="Filter by Creation Date" onChange={handleDateFilter}>
 					<option>select date</option>
 					{ creationDates.map((date, index) => <option key={index}>{date}</option>)}
 				</Form.Select>			
 			</Form>
-		</>
+		</div>
 		)
 	}
 
