@@ -23,12 +23,15 @@ const Chart = (props) => {
 		)
 	}
 	return (
-		<div className="flex-column m-1 border border-primary">
-			<HighchartsReact highcharts={Highcharts} options={options} />
-			{ changeAndDeleteButtons }
-			<DeleteModal id={id} />
-			<ChangeModal id={id}/>
-		</div>
+		<>
+			<h6>{props.date}</h6>
+			<div className="flex-column m-1 border border-primary">
+				<HighchartsReact highcharts={Highcharts} options={options} />
+				{ changeAndDeleteButtons }
+				<DeleteModal id={id} />
+				<ChangeModal id={id}/>
+			</div>
+		</>
 	)
 }
 
