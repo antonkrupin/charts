@@ -16,9 +16,12 @@ const ChangeModal = (props) => {
 	
 	let newChartTitle;
 	let newChartType;
+	let testSeries = [];
 	if (updatingChart !== '') {
 		newChartTitle = updatingChart.options.title.text;
 		newChartType = updatingChart.options.chart.type
+		testSeries = updatingChart.options.series;
+		console.log(testSeries);
 	} 
 
 	const setNewChartTitle = (e) => {
@@ -82,3 +85,17 @@ const ChangeModal = (props) => {
 };
 
 export default ChangeModal;
+
+/*
+
+{testSeries.map((elem) => 
+						<Form.Group>
+							<Form.Label className="text-primary">Chart name - {elem.name}</Form.Label>
+							<InputGroup >
+								<Form.Control />
+							</InputGroup>
+							<ColorPicker />
+						</Form.Group>
+					)}
+
+*/
