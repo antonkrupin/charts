@@ -3,38 +3,54 @@ import _ from 'lodash';
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
-import { changeUdateModalShow, updateChart, deleteChart } from '../../slices/chartReducer';
+import { updateChart } from '../../slices/chartReducer';
+import { updateChartModalShow } from '../../slices/modalsReducer';
 
-const ChangeModal = () => {
+const ChangeModal = (props) => {
 	const dispatch = useDispatch();
 	
-	const isUpdateModalShow = useSelector((state) => state.chart.isUpdateModalShow);
+	const isUpdateChartModalShow = useSelector((state) => state.modals.isUpdateChartModalShow);
 
-	const updatingChart = useSelector((state) => state.chart.updatedChart);
+	const updatingChart = useSelector((state) => state.chart.chartForChange);
 	
-	const [chartTitle, setNewChartTitle] = useState(updatingChart.options.title.text);
+	//const [chartTitle, setNewChartTitle] = useState(updatingChart.options.title.text);
 
-	const [chartType, setNewChartTipe] = useState(updatingChart.options.chart.type)
+	//const [chartType, setNewChartTipe] = useState(updatingChart.options.chart.type);
+	let newChartTitle;
+	let newChartType;
+	if (updatingChart !== '') {
+		newChartTitle = updatingChart.options.title.text;
+		newChartType = updatingChart.options.chart.type
+	} 
+
+	const setNewChartTitle = (e) => {
+		newChartTitle = e.target.value;
+	}
+
+	const setNewChartType = (e) => {
+		newChartType = e.target.value;
+	}
 
 	const handleChangeChartName = () => {
-		const options = _.cloneDeep(updatingChart.options);
-		options.title.text = chartTitle;
-		options.chart.type = chartType;
+		const { options } = _.cloneDeep(updatingChart);
+		options.title.text = newChartTitle;
+		options.chart.type = newChartType;
+		options.series[0]['color'] = "#8B0000";
 		const { id } = updatingChart;
 		dispatch(updateChart({id, options}));
-		dispatch(changeUdateModalShow());
+		dispatch(updateChartModalShow());
 	}
 	
 	return (
-    <Modal show={isUpdateModalShow} onHide={() => dispatch(changeUdateModalShow())}>
+    <Modal show={isUpdateChartModalShow} onHide={() => dispatch(updateChartModalShow())}>
       <Modal.Header closeButton>
         <Modal.Title>Change Chart</Modal.Title>
       </Modal.Header>
 			<Modal.Body>
 				<Form>
 					<Form.Group>
-							<Form.Label className="text-primary">Chart name - {chartTitle}</Form.Label>
-							<InputGroup onChange={(e) => setNewChartTitle(e.target.value)} >
+							<Form.Label className="text-primary">Chart name - {newChartTitle}</Form.Label>
+							<InputGroup onInput={setNewChartTitle} >
 								<Form.Control 
 									placeholder="Enter Chart Name"
 									aria-label="chartName"
@@ -42,8 +58,8 @@ const ChangeModal = () => {
 							</InputGroup>
 						</Form.Group>
 						<Form.Group>
-							<Form.Label className="text-primary">Chart Type - {chartType}</Form.Label>
-							<Form.Select className="mb-3" aria-label="Select Chart Type" onChange={(e) => setNewChartTipe(e.target.value)}>
+							<Form.Label className="text-primary">Chart Type - {newChartType}</Form.Label>
+							<Form.Select className="mb-3" aria-label="Select Chart Type" onChange={setNewChartType}>
 								<option>Select new chart type</option>
 								<option>line</option>
 								<option>spline</option>
@@ -55,7 +71,7 @@ const ChangeModal = () => {
 				</Form>
 			</Modal.Body>
       <Modal.Footer>
-        <Button variant="info" onClick={() => dispatch(changeUdateModalShow())}>
+        <Button variant="info" onClick={() => dispatch(updateChartModalShow())}>
           Cancel
         </Button>
         <Button variant="danger" onClick={handleChangeChartName}>
