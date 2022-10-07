@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 import { updateChart } from '../../slices/chartReducer';
 import { updateChartModalShow } from '../../slices/modalsReducer';
+import ColorPicker from '../colorPicker';
 
 const ChangeModal = (props) => {
 	const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const ChangeModal = (props) => {
 	}
 
 	const handleChangeChartName = () => {
+		console.log(color);
 		const { options } = _.cloneDeep(updatingChart);
 		options.title.text = newChartTitle;
 		options.chart.type = newChartType;
@@ -68,6 +70,7 @@ const ChangeModal = (props) => {
 								<option>pie</option>
 							</Form.Select>
 					</Form.Group>
+					<ColorPicker />
 				</Form>
 			</Modal.Body>
       <Modal.Footer>
