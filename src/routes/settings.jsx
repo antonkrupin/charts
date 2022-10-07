@@ -22,7 +22,7 @@ const Settings = () => {
 				<Button variant="primary" onClick={() => dispatch(addChartModalShow())} >Add chart</Button>
 			</div>
 			<div className="d-flex flex-wrap justify-content-center">
-				{ charts.map((chart) => <Chart key={chart.id} options={chart.options} id={chart.id} location={location}/>) }
+				{ charts.map((chart) => <Chart key={chart.id} options={chart.options} id={chart.id} location={location} date={chart.date}/>) }
 			</div>
 			<AddChartModal />
 		</>
