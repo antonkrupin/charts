@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
-import { changeModalShow } from '../slices/chartReducer';
+import { addChartModalShow } from '../slices/modalsReducer';
 import Chart from '../components/chart';
 import AlertMessage from '../components/alert';
 import AddChartModal from '../components/modals/addChart';
@@ -19,7 +19,7 @@ const Settings = () => {
 		<>
 			<AlertMessage />
 			<div className="d-flex justify-content-center m-5">
-				<Button variant="primary" onClick={() => dispatch(changeModalShow())} >Add chart</Button>
+				<Button variant="primary" onClick={() => dispatch(addChartModalShow())} >Add chart</Button>
 			</div>
 			<div className="d-flex flex-wrap justify-content-center">
 				{ charts.map((chart) => <Chart key={chart.id} options={chart.options} id={chart.id} location={location}/>) }
