@@ -25,7 +25,7 @@ const CreationDateFilter = () => {
 			<h6 className="m-2">Filter by date</h6>
 			<Form>
 				<Form.Select aria-label="Filter by Creation Date" onChange={handleDateFilter}>
-					<option>select date</option>
+					<option>all charts</option>
 					{ creationDates.map((date, index) => <option key={index}>{date}</option>)}
 				</Form.Select>			
 			</Form>
