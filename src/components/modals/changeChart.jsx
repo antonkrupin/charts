@@ -14,9 +14,6 @@ const ChangeModal = (props) => {
 
 	const updatingChart = useSelector((state) => state.chart.chartForChange);
 	
-	//const [chartTitle, setNewChartTitle] = useState(updatingChart.options.title.text);
-
-	//const [chartType, setNewChartTipe] = useState(updatingChart.options.chart.type);
 	let newChartTitle;
 	let newChartType;
 	if (updatingChart !== '') {
@@ -33,7 +30,6 @@ const ChangeModal = (props) => {
 	}
 
 	const handleChangeChartName = () => {
-		console.log(color);
 		const { options } = _.cloneDeep(updatingChart);
 		options.title.text = newChartTitle;
 		options.chart.type = newChartType;
