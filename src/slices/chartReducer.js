@@ -1,13 +1,12 @@
 import _ from 'lodash';
 import { createSlice, current } from '@reduxjs/toolkit';
+import { updateChartModalShow, deleteChartModalShow } from './modalsReducer';
 
 const initialState = {
 	charts: [],
 	creationDates: [],
 	chartsFilteredByDate: [],
-	isModalShow: false,
-	isDeleteModalShow: false,
-	isUpdateModalShow: false,
+	chartForChange: '',
 	updatedChart: '',
 }
 
@@ -15,23 +14,6 @@ const chartSlice = createSlice({
 	name: 'chart',
 	initialState,
 	reducers: {
-		changeModalShow: (state) => {
-			state.isModalShow = !state.isModalShow;
-		},
-		changeDeleteModalShow: (state) => {
-			state.isDeleteModalShow = !state.isDeleteModalShow;
-		},
-		changeUdateModalShow: (state, action) => {
-			if (action.payload !== undefined) {
-				const { id } = action.payload
-				state.charts.forEach((chart, index) => {
-					if (chart.id === id) {
-						state.updatedChart = chart;
-					}
-				})
-			}
-			state.isUpdateModalShow = !state.isUpdateModalShow;
-		},
 		addChart: (state, action) => {
 			const id = _.uniqueId();
 			const { title, type, chartData, linesName, date } = action.payload;
@@ -56,9 +38,12 @@ const chartSlice = createSlice({
 					series: series,
 				}
 			})
-			if (state.updatedChart === '') {
+			/*if (state.updatedChart === '') {
 				state.updatedChart = state.charts[0];
-			}
+			}*/
+			/*if (state.chartForChange === '') {
+				state.chartForChange = state.charts[0];
+			}*/
 		},
 		addDate: (state, action) => {
 			console.log(action.payload);
@@ -74,31 +59,49 @@ const chartSlice = createSlice({
 		},
 		updateChart: (state, action) => {
 			const { id, options } = action.payload;
-			console.log(id);
 			state.charts.forEach((chart, index) => {
 				if (chart.id === id) {
 					chart.options = options;
 				}
 			})
 		},
+		getChartForChange: (state, action) => {
+			//console.log('test');
+			const { id } = action.payload;
+			//console.log(id);
+		},
 		deleteChart: (state, action) => {
+			console.log(action.payload);
 			state.charts.forEach((chart, index) => {
 				if (chart.id === action.payload) {
-					console.log(current(state.charts[index]));
+					console.log(current(chart));
 					state.charts.splice(index, 1);
 				}
 			})
 		},
 	},
+	extraReducers: (builder) => {
+		builder.addCase(updateChartModalShow, (state, action) => {
+			const id = action.payload;
+			state.charts.forEach((chart) => {
+				if (chart.id === id) {
+					state.chartForChange = chart;
+				}
+			});
+		});
+		builder.addCase(deleteChartModalShow, (state, action) => {
+			console.log('__________');
+			console.log(action.payload);
+			console.log('___________');
+		});
+	}
 });
 
-export const { 
-	changeModalShow,
-	changeDeleteModalShow,
-	changeUdateModalShow,
+export const {
 	addChart,
 	addDate,
-	filterChartsByDate, 
+	filterChartsByDate,
+	getChartForChange,
 	updateChart,
 	deleteChart
 } = chartSlice.actions;
