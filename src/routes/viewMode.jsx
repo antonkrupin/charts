@@ -24,7 +24,7 @@ const ViewMode = () => {
 		<AlertMessage />
 		<CreationDateFilter />
 		<div className="d-flex flex-wrap justify-content-center">
-			{ chartsToRender.map((chart, index) => <Chart key={index} options={chart.options} location={location}/>) }
+			{ chartsToRender.map((chart, index) => <Chart key={index} options={chart.options} location={location} date={chart.date}/>) }
 		</div>
 		</>
 	)
