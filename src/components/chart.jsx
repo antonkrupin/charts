@@ -22,9 +22,9 @@ const Chart = (props) => {
 		)
 	}
 	return (
-		<div className="chart">
+		<div className="chart shadow rounded p-3 m-2">
 			<h6 className="text-center">Creation date - {props.date}</h6>
-			<div className="flex-column m-1 border border-primary">
+			<div className="flex-column m-1">
 				<HighchartsReact highcharts={Highcharts} options={options} />
 				{ changeAndDeleteButtons }
 			</div>
