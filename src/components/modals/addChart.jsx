@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 import DatePicker from 'react-date-picker';
 
-import { addChart } from '../../slices/chartReducer';
+import { addChart, addDate } from '../../slices/chartReducer';
 import { addChartModalShow } from '../../slices/modalsReducer';
 
 const AddChartModal = () => {
@@ -53,9 +53,11 @@ const AddChartModal = () => {
 
 	const handleCreateChart = () => {
 		setLinesCount([]);
-		const date = creationDate.toLocaleDateString()
+		const date = creationDate.toLocaleDateString('ru')
 		setCreationDate(new Date());
 		dispatch(addChart({title, type, chartData, linesName, date}));
+		dispatch(addDate({date}));
+		setLinesName([]);
 		dispatch(addChartModalShow());
 	}
 
