@@ -7,6 +7,8 @@ import { addChartModalShow } from '../slices/modalsReducer';
 import Chart from '../components/chart';
 import AlertMessage from '../components/alert';
 import AddChartModal from '../components/modals/addChart';
+import DeleteModal from '../components/modals/deleteChart';
+import ChangeModal from '../components/modals/changeChart';
 
 const Settings = () => {
 	const charts = useSelector((state) => state.chart.charts);
@@ -25,6 +27,8 @@ const Settings = () => {
 				{ charts.map((chart) => <Chart key={chart.id} options={chart.options} id={chart.id} location={location} date={chart.date}/>) }
 			</div>
 			<AddChartModal />
+			<DeleteModal  />
+			<ChangeModal  />
 		</>
 	)
 };
