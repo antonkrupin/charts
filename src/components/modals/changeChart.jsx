@@ -16,13 +16,13 @@ const ChangeModal = (props) => {
 	
 	let newChartTitle;
 	let newChartType;
-	//let testSeries = [];
+	let chartData = [];
 	if (updatingChart !== '') {
 		newChartTitle = updatingChart.options.title.text;
 		newChartType = updatingChart.options.chart.type
-		//testSeries = updatingChart.options.series;
+		chartData = _.cloneDeep(updatingChart.options.series);
 	} 
-
+	
 	const setNewChartTitle = (e) => {
 		newChartTitle = e.target.value;
 	}
@@ -31,12 +31,27 @@ const ChangeModal = (props) => {
 		newChartType = e.target.value;
 	}
 
-	const handleChangeChartName = () => {
-		const { options } = _.cloneDeep(updatingChart);
+	const newChartColors = [];
+
+	const colorHandler = (e, index) => {
+		newChartColors[index] = e;
+	}
+	
+	const chartDataHandler = (e, index) => {
+		chartData[index].name = e.target.value;
+	}
+
+	const changeChartParameters = () => {
+		//const { id } = updatingChart;
+		const { id, options } = _.cloneDeep(updatingChart);
 		options.title.text = newChartTitle;
 		options.chart.type = newChartType;
-		options.series[0]['color'] = "#8B0000";
-		const { id } = updatingChart;
+		options.series.forEach((serie, index) => {
+			serie.name = chartData[index].name;
+			if (newChartColors[index] !== undefined) {
+				serie['color'] = newChartColors[index];
+			}
+		});
 		dispatch(updateChart({id, options}));
 		dispatch(updateChartModalShow());
 	}
@@ -48,11 +63,11 @@ const ChangeModal = (props) => {
       </Modal.Header>
 			<Modal.Body>
 				<Form>
-					<Form.Group>
+						<Form.Group>
 							<Form.Label className="text-primary">Chart name - {newChartTitle}</Form.Label>
-							<InputGroup onInput={setNewChartTitle} >
+							<InputGroup className="mb-3" onInput={setNewChartTitle} >
 								<Form.Control 
-									placeholder="Enter Chart Name"
+									placeholder="Enter New Chart Name"
 									aria-label="chartName"
 								/>
 							</InputGroup>
@@ -67,17 +82,32 @@ const ChangeModal = (props) => {
 								<option>bar</option>
 								<option>pie</option>
 							</Form.Select>
-					</Form.Group>
-					<div className="colorPicker">
-						<ColorPicker />
-					</div>
+						</Form.Group>
+						<Form.Group>
+							{chartData.map((serie, index) =>
+								<div key={index}>
+									<hr />
+									<Form.Label className="text-primary">Parameter name - {serie.name}</Form.Label>
+									<InputGroup className="mb-3" onChange={(e) => chartDataHandler(e, index)}>
+										<Form.Control 
+											placeholder="Enter new parameter name"
+											aria-label="chartName"
+										/>
+									</InputGroup>
+									<Form.Label className="text-primary">Select new parameter color</Form.Label>
+									<div className="colorPicker mb-3">
+										<ColorPicker color={serie['color']} onChange={(e) => colorHandler(e, index)}/>
+									</div>
+								</div>
+							)}
+						</Form.Group>
 				</Form>
 			</Modal.Body>
       <Modal.Footer>
         <Button variant="info" onClick={() => dispatch(updateChartModalShow())}>
           Cancel
         </Button>
-        <Button variant="danger" onClick={handleChangeChartName}>
+        <Button variant="danger" onClick={changeChartParameters}>
           Save Changes
         </Button>
       </Modal.Footer>
