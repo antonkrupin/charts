@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getChartForChange } from './chartReducer'
 
 const initialState = {
 	isAddChartModalShow: false,
