@@ -16,7 +16,7 @@ const AddChartModal = () => {
 
 	const [type, setChartType] = useState('');
 
-	const [lines, setLinesCount] = useState([]);
+	const [parameters, setParametersCount] = useState([]);
 
 	const [chartData, setChartData] = useState([]);
 
@@ -36,11 +36,11 @@ const AddChartModal = () => {
 	}
 
 	const handleLinesCount = (e) => {
-		const linesCount = Number(e.target.value);
-		const linesValues = [];
+		const parametersCount = Number(e.target.value);
+		const parametersValues = [];
 		const result = [];
-		for (let i = 0; i < linesCount; i += 1) {
-			linesValues.push('1');
+		for (let i = 0; i < parametersCount; i += 1) {
+			parametersValues.push('1');
 			result.push(getRandomData());
 		}
 		Promise.all(result).then((data) => {
@@ -48,11 +48,11 @@ const AddChartModal = () => {
 			addBtn.classList.remove('disabled');
 			setChartData(data);
 		});
-		setLinesCount(linesValues);
+		setParametersCount(parametersValues);
 	}
 
-	const handleCreateChart = () => {
-		setLinesCount([]);
+	const createChart = () => {
+		setParametersCount([]);
 		const date = creationDate.toLocaleDateString('ru')
 		setCreationDate(new Date());
 		dispatch(addChart({title, type, chartData, linesName, date}));
@@ -93,19 +93,19 @@ const AddChartModal = () => {
 						</Form.Select>
 					</Form.Group>
           <Form.Group>
-						<Form.Label className="text-primary">Enter Charts count</Form.Label>
+						<Form.Label className="text-primary">Enter the number of chart parameters</Form.Label>
 						<InputGroup className="mb-3" onChange={handleLinesCount}>
 							<Form.Control
-								placeholder="Enter Charts Count"
-								aria-label="chartsCount"
+								placeholder="Enter Parameters Count"
+								aria-label="parametersCount"
 							/>
 						</InputGroup>
 					</Form.Group>
           <Form.Group>
 					{
-            lines.map((line, index) => 
+            parameters.map((line, index) => 
             <InputGroup key={index} className="mb-3">
-              <Form.Control onBlur={handleLinesName} placeholder='Enter Chart name' />
+              <Form.Control onBlur={handleLinesName} placeholder='Enter Parameter name' />
             </InputGroup>)
           }
 					</Form.Group>
@@ -115,7 +115,7 @@ const AddChartModal = () => {
         <Button variant="secondary" onClick={() => dispatch(addChartModalShow())}>
           Close
         </Button>
-        <Button id="addBtn" className="disabled" variant="primary" onClick={handleCreateChart}>
+        <Button id="addBtn" className="disabled" variant="primary" onClick={createChart}>
           Add Chart
         </Button>
       </Modal.Footer>
