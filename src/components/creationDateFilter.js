@@ -1,11 +1,12 @@
+import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form } from 'react-bootstrap';
 
 import { filterChartsByDate } from '../slices/chartReducer';
 
 const CreationDateFilter = () => {
-	const creationDates = useSelector((state) => state.chart.creationDates);
-
+	const creationDates = _.keys(useSelector((state) => state.chart.creationDates));
+	
 	const dispatch = useDispatch();
 
 	const handleDateFilter = (e) => {
