@@ -4,10 +4,10 @@ import { updateChartModalShow, deleteChartModalShow } from './modalsReducer';
 
 const initialState = {
 	charts: [],
-	creationDates: [],
+	creationDates: {},
 	chartsFilteredByDate: [],
 	chartForChange: '',
-	updatedChart: '',
+	chartForDeleteId: '',
 }
 
 const chartSlice = createSlice({
@@ -22,9 +22,6 @@ const chartSlice = createSlice({
 				const temp = linesName[index];
 				series.push({name:`${temp}`, data:line});
 			})
-			if (state.creationDates.indexOf(date) === -1) {
-				state.creationDates.push(date);
-			}
 			state.charts.push({
 				id,
 				date,
@@ -38,46 +35,51 @@ const chartSlice = createSlice({
 					series: series,
 				}
 			})
-			/*if (state.updatedChart === '') {
-				state.updatedChart = state.charts[0];
-			}*/
-			/*if (state.chartForChange === '') {
-				state.chartForChange = state.charts[0];
-			}*/
 		},
 		addDate: (state, action) => {
-			console.log(action.payload);
+			const { date } = action.payload;
+			if (date in state.creationDates) {
+				state.creationDates[date] += 1;
+			} else {
+				state.creationDates[date] = 1;
+			}
 		},
 		filterChartsByDate: (state, action) => {
 			const { date } = action.payload;
 			state.chartsFilteredByDate = [];
-			state.charts.forEach((el, index) => {
-				if (el.date === date) {
+			state.charts.forEach((chart, index) => {
+				if (chart.date === date) {
 					state.chartsFilteredByDate.push(state.charts[index]);
 				}
 			});
 		},
 		updateChart: (state, action) => {
 			const { id, options } = action.payload;
-			state.charts.forEach((chart, index) => {
+			state.charts.forEach((chart) => {
 				if (chart.id === id) {
 					chart.options = options;
 				}
 			})
 		},
-		getChartForChange: (state, action) => {
-			//console.log('test');
-			const { id } = action.payload;
-			//console.log(id);
-		},
 		deleteChart: (state, action) => {
-			console.log(action.payload);
 			state.charts.forEach((chart, index) => {
 				if (chart.id === action.payload) {
-					console.log(current(chart));
 					state.charts.splice(index, 1);
 				}
 			})
+		},
+		deleteDate: (state, action) => {
+			const id = action.payload;
+			let date;
+			state.charts.forEach((chart) => {
+				if (chart.id === id) {
+					date = chart.date;
+				}
+			})
+			state.creationDates[date] -= 1;
+			if (state.creationDates[date] === 0) {
+				delete state.creationDates[date];
+			}
 		},
 	},
 	extraReducers: (builder) => {
@@ -90,9 +92,7 @@ const chartSlice = createSlice({
 			});
 		});
 		builder.addCase(deleteChartModalShow, (state, action) => {
-			console.log('__________');
-			console.log(action.payload);
-			console.log('___________');
+			state.chartForDeleteId = action.payload;
 		});
 	}
 });
@@ -101,9 +101,9 @@ export const {
 	addChart,
 	addDate,
 	filterChartsByDate,
-	getChartForChange,
 	updateChart,
-	deleteChart
+	deleteChart,
+	deleteDate,
 } = chartSlice.actions;
 
 export default chartSlice.reducer;
