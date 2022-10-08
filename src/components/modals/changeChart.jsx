@@ -68,7 +68,9 @@ const ChangeModal = (props) => {
 								<option>pie</option>
 							</Form.Select>
 					</Form.Group>
-					<ColorPicker />
+					<div className="colorPicker">
+						<ColorPicker />
+					</div>
 				</Form>
 			</Modal.Body>
       <Modal.Footer>
