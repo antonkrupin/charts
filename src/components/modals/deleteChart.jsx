@@ -1,17 +1,18 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
-import { deleteChart } from '../../slices/chartReducer';
+import { deleteChart, deleteDate } from '../../slices/chartReducer';
 import { deleteChartModalShow } from '../../slices/modalsReducer';
 
 const DeleteModal = (props) => {
 	const dispatch = useDispatch();
   
 	const isDeleteChartModalShow = useSelector((state) => state.modals.isDeleteChartModalShow);
-	
+  const chartForDelete = useSelector((state) => state.chart.chartForDeleteId);
+
 	const handleDelete = () => {
-		console.log(props.id)
-		dispatch(deleteChart(props.id));
+    dispatch(deleteDate(chartForDelete));
+		dispatch(deleteChart(chartForDelete));
 		dispatch(deleteChartModalShow(props.id));
 	}
 
