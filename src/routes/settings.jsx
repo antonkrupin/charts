@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
-import { addChartModalShow } from '../slices/modalsReducer';
-import Chart from '../components/chart';
-import AlertMessage from '../components/alert';
-import AddChartModal from '../components/modals/addChart';
-import DeleteModal from '../components/modals/deleteChart';
-import ChangeModal from '../components/modals/changeChart';
+import { addChartModalShow } from '../slices/modalsReducer.js';
+import Chart from '../components/chart.jsx';
+import AlertMessage from '../components/alert.jsx';
+import AddChartModal from '../components/modals/addChart.jsx';
+import DeleteModal from '../components/modals/deleteChart.jsx';
+import ChangeModal from '../components/modals/changeChart.jsx';
 
 const Settings = () => {
 	const charts = useSelector((state) => state.chart.charts);
@@ -20,7 +20,7 @@ const Settings = () => {
 	return (
 		<>
 			<AlertMessage location={location} />
-			<div className="d-flex justify-content-center m-5">
+			<div className="d-flex sticky-top justify-content-center m-5">
 				<Button variant="primary" onClick={() => dispatch(addChartModalShow())} >Add chart</Button>
 			</div>
 			<div className="d-flex flex-wrap justify-content-center">
