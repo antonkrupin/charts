@@ -6,6 +6,7 @@ import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 import { updateChart } from '../../slices/chartReducer.js';
 import { updateChartModalShow } from '../../slices/modalsReducer.js';
 import ColorPicker from '../colorPicker.jsx';
+import SelectChartType from '../selectChartType.jsx';
 
 const ChangeModal = () => {
 	const dispatch = useDispatch();
@@ -71,17 +72,7 @@ const ChangeModal = () => {
 							/>
 						</InputGroup>
 					</Form.Group>
-					<Form.Group>
-						<Form.Label className="text-primary">Chart Type - {newChartType}</Form.Label>
-						<Form.Select className="mb-3" aria-label="Select Chart Type" onChange={setNewChartType}>
-							<option>Select new chart type</option>
-							<option>line</option>
-							<option>spline</option>
-							<option>area</option>
-							<option>bar</option>
-							<option>pie</option>
-						</Form.Select>
-					</Form.Group>
+					<SelectChartType onChange={setNewChartType} modal='changeChart' chartType={newChartType} />
 					<Form.Group>
 						{chartData.map((serie, index) =>
 							<div key={index}>
