@@ -19,7 +19,7 @@ const Settings = () => {
 	
 	return (
 		<>
-			<AlertMessage />
+			<AlertMessage location={location} />
 			<div className="d-flex justify-content-center m-5">
 				<Button variant="primary" onClick={() => dispatch(addChartModalShow())} >Add chart</Button>
 			</div>
