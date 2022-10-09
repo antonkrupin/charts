@@ -8,6 +8,6 @@ This application uses https://www.random.org/ to generate random sequences of nu
 
 Clone repository.
 
-Run ### `npm install` to install application
+Run `npm install` to install application
 
 Run ### `npm start` to run application on http://localhost:3000
