@@ -18,10 +18,10 @@ const ViewMode = () => {
 	} else {
 		chartsToRender = chartsFilteredByDate;
 	}
-	// разобраться с ключем key при фильтрации
+	
 	return (
 		<>
-		<AlertMessage />
+		<AlertMessage location={location} />
 		<CreationDateFilter />
 		<div className="d-flex flex-wrap justify-content-center mt-5">
 			{ chartsToRender.map((chart, index) => <Chart key={index} options={chart.options} location={location} date={chart.date}/>) }
