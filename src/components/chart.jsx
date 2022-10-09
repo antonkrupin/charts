@@ -9,7 +9,7 @@ import { deleteChartModalShow, updateChartModalShow } from '../slices/modalsRedu
 import '../styles/chart.css';
 
 const Chart = (props) => {
-	const { location, options, id } = props;
+	const { location, options, id, date } = props;
 
 	const dispatch = useDispatch();
 	
@@ -23,8 +23,8 @@ const Chart = (props) => {
 		)
 	}
 	return (
-		<div className="chart shadow rounded p-3 m-2">
-			<h6 className="text-center">Creation date - {props.date}</h6>
+		<div className="chart shadow rounded m-2 p-3">
+			<h6 className="text-center">Creation date - {date}</h6>
 			<div className="flex-column m-1">
 				<HighchartsReact highcharts={Highcharts} options={options} />
 				{ changeAndDeleteButtons }
