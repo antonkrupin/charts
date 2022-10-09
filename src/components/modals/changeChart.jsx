@@ -3,11 +3,11 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 
-import { updateChart } from '../../slices/chartReducer';
-import { updateChartModalShow } from '../../slices/modalsReducer';
-import ColorPicker from '../colorPicker';
+import { updateChart } from '../../slices/chartReducer.js';
+import { updateChartModalShow } from '../../slices/modalsReducer.js';
+import ColorPicker from '../colorPicker.jsx';
 
-const ChangeModal = (props) => {
+const ChangeModal = () => {
 	const dispatch = useDispatch();
 	
 	const isUpdateChartModalShow = useSelector((state) => state.modals.isUpdateChartModalShow);
@@ -56,62 +56,62 @@ const ChangeModal = (props) => {
 	}
 	
 	return (
-    <Modal show={isUpdateChartModalShow} onHide={() => dispatch(updateChartModalShow())}>
-      <Modal.Header closeButton>
-        <Modal.Title>Change Chart</Modal.Title>
-      </Modal.Header>
+		<Modal show={isUpdateChartModalShow} onHide={() => dispatch(updateChartModalShow())}>
+			<Modal.Header closeButton>
+				<Modal.Title>Change Chart</Modal.Title>
+			</Modal.Header>
 			<Modal.Body>
 				<Form>
-						<Form.Group>
-							<Form.Label className="text-primary">Chart name - {newChartTitle}</Form.Label>
-							<InputGroup className="mb-3" onInput={setNewChartTitle} >
-								<Form.Control 
-									placeholder="Enter New Chart Name"
-									aria-label="chartName"
-								/>
-							</InputGroup>
-						</Form.Group>
-						<Form.Group>
-							<Form.Label className="text-primary">Chart Type - {newChartType}</Form.Label>
-							<Form.Select className="mb-3" aria-label="Select Chart Type" onChange={setNewChartType}>
-								<option>Select new chart type</option>
-								<option>line</option>
-								<option>spline</option>
-								<option>area</option>
-								<option>bar</option>
-								<option>pie</option>
-							</Form.Select>
-						</Form.Group>
-						<Form.Group>
-							{chartData.map((serie, index) =>
-								<div key={index}>
-									<hr />
-									<Form.Label className="text-primary">Parameter name - {serie.name}</Form.Label>
-									<InputGroup className="mb-3" onChange={(e) => setNewChartParameterName(e, index)}>
-										<Form.Control 
-											placeholder="Enter new parameter name"
-											aria-label="chartName"
-										/>
-									</InputGroup>
-									<Form.Label className="text-primary">Select new parameter color</Form.Label>
-									<div className="colorPicker mb-3">
-										<ColorPicker color={serie['color']} onChange={(e) => setNewChartColor(e, index)}/>
-									</div>
+					<Form.Group>
+						<Form.Label className="text-primary">Chart name - {newChartTitle}</Form.Label>
+						<InputGroup className="mb-3" onInput={setNewChartTitle} >
+							<Form.Control 
+								placeholder="Enter New Chart Name"
+								aria-label="chartName"
+							/>
+						</InputGroup>
+					</Form.Group>
+					<Form.Group>
+						<Form.Label className="text-primary">Chart Type - {newChartType}</Form.Label>
+						<Form.Select className="mb-3" aria-label="Select Chart Type" onChange={setNewChartType}>
+							<option>Select new chart type</option>
+							<option>line</option>
+							<option>spline</option>
+							<option>area</option>
+							<option>bar</option>
+							<option>pie</option>
+						</Form.Select>
+					</Form.Group>
+					<Form.Group>
+						{chartData.map((serie, index) =>
+							<div key={index}>
+								<hr />
+								<Form.Label className="text-primary">Parameter name - {serie.name}</Form.Label>
+								<InputGroup className="mb-3" onChange={(e) => setNewChartParameterName(e, index)}>
+									<Form.Control 
+										placeholder="Enter new parameter name"
+										aria-label="chartName"
+									/>
+								</InputGroup>
+								<Form.Label className="text-primary">Select new parameter color</Form.Label>
+								<div className="colorPicker mb-3">
+									<ColorPicker color={serie['color']} onChange={(e) => setNewChartColor(e, index)}/>
 								</div>
-							)}
-						</Form.Group>
+							</div>
+						)}
+					</Form.Group>
 				</Form>
 			</Modal.Body>
-      <Modal.Footer>
-        <Button variant="info" onClick={() => dispatch(updateChartModalShow())}>
+			<Modal.Footer>
+				<Button variant="info" onClick={() => dispatch(updateChartModalShow())}>
           Cancel
-        </Button>
-        <Button variant="danger" onClick={changeChart}>
+				</Button>
+				<Button variant="danger" onClick={changeChart}>
           Save Changes
-        </Button>
-      </Modal.Footer>
-  </Modal>
-  )
+				</Button>
+			</Modal.Footer>
+		</Modal>
+	)
 };
 
 export default ChangeModal;
