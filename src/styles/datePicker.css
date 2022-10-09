@@ -1,0 +1,7 @@
+.react-date-picker__calendar--open {
+  position: absolute;
+}
+
+.react-date-picker__calendar--closed {
+  position: absolute;
+}
