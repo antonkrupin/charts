@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
+
 import { deleteChart, deleteDate } from '../../slices/chartReducer';
 import { deleteChartModalShow } from '../../slices/modalsReducer';
 
