@@ -4,6 +4,8 @@ import { Modal, Button, Form, InputGroup, Overlay } from 'react-bootstrap';
 import axios from 'axios';
 import DatePicker from 'react-date-picker';
 
+import SelectChartType from '../selectChartType.jsx';
+
 import { addChart, addDate } from '../../slices/chartReducer.js';
 import { addChartModalShow } from '../../slices/modalsReducer.js';
 
@@ -86,17 +88,7 @@ const AddChartModal = () => {
 						<Form.Label className="text-primary">Chart creation date</Form.Label>
 						<DatePicker className="m-3" onChange={setCreationDate} value={creationDate} />
 					</Form.Group>
-					<Form.Group>
-						<Form.Label className="text-primary">Select Chart type</Form.Label>
-						<Form.Select className="mb-3" aria-label="Select Chart Type" onChange={(e) => setChartType(e.target.value)}>
-							<option>Select chart type</option>
-							<option>line</option>
-							<option>spline</option>
-							<option>area</option>
-							<option>bar</option>
-							<option>pie</option>
-						</Form.Select>
-					</Form.Group>
+					<SelectChartType onChange={(e) => setChartType(e.target.value)} modal='addChart' />
 					<Form.Group>
 						<Form.Label className="text-primary">Enter the number of chart parameters</Form.Label>
 						<InputGroup className="mb-3" onChange={chartParametersCount}>
