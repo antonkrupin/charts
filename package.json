@@ -1,6 +1,7 @@
 {
   "name": "charts",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.5",
@@ -9,6 +10,8 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.2",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
     "highcharts": "^10.2.1",
     "highcharts-react-official": "^3.1.0",
     "lodash": "^4.17.21",
@@ -45,5 +48,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^8.25.0",
+    "eslint-plugin-react": "^7.31.8"
   }
 }
