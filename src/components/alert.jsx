@@ -1,3 +1,4 @@
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Alert } from 'react-bootstrap';
 
@@ -12,9 +13,9 @@ const AlertMessage = (props) => {
 
 	if (charts.length === 0) {
 		return ( 
-		<Alert className="text-center" variant="warning" >
-			{alertText}
-		</Alert>
+			<Alert className="text-center" variant="warning" >
+				{alertText}
+			</Alert>
 		)
 	}
 
