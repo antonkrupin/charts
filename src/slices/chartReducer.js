@@ -26,6 +26,9 @@ const chartSlice = createSlice({
 				id,
 				date,
 				options: {
+					accessibility: {
+						enabled: false,
+					},
 					chart: {
 						type: type,
 					},
