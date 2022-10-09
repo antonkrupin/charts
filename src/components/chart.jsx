@@ -5,6 +5,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
 import { deleteChartModalShow, updateChartModalShow } from '../slices/modalsReducer';
+
 import '../styles/chart.css';
 
 const Chart = (props) => {
