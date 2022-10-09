@@ -16,12 +16,7 @@ const chartSlice = createSlice({
 	reducers: {
 		addChart: (state, action) => {
 			const id = _.uniqueId();
-			const { title, type, chartData, parametersNames, date } = action.payload;
-			const series = [];
-			chartData.forEach((line, index) => {
-				const temp = parametersNames[index];
-				series.push({name:`${temp}`, data:line});
-			})
+			const { title, type, series, date } = action.payload;
 			state.charts.push({
 				id,
 				date,
@@ -48,7 +43,7 @@ const chartSlice = createSlice({
 			}
 		},
 		filterChartsByDate: (state, action) => {
-			const { date } = action.payload;
+			const date = action.payload;
 			state.chartsFilteredByDate = [];
 			state.charts.forEach((chart, index) => {
 				if (chart.date === date) {
