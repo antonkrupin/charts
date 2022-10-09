@@ -7,6 +7,8 @@ import DatePicker from 'react-date-picker';
 import { addChart, addDate } from '../../slices/chartReducer';
 import { addChartModalShow } from '../../slices/modalsReducer';
 
+import '../../styles/datePicker.css';
+
 const AddChartModal = () => {
 	const target = useRef(null);
 	const dispatch = useDispatch();
@@ -33,9 +35,7 @@ const AddChartModal = () => {
 	}
 
 	const handleParametersNames = (e) => {
-		const copy =  Object.assign([], parametersNames);
-		copy.push(e.target.value);
-		setParametersNames(copy);
+		setParametersNames([...parametersNames, e.target.value]);
 	}
 
 	const handleParametersCount = (e) => {
@@ -129,7 +129,7 @@ const AddChartModal = () => {
             {...props}
             style={{
               position: 'relative',
-              backgroundColor: 'rgba(255, 100, 100, 0.85)',
+              backgroundColor: 'rgba(144, 238, 144, 0.85)',
               padding: '2px 10px',
               color: 'white',
               borderRadius: 3,
