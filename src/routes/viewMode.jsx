@@ -1,9 +1,10 @@
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import Chart from '../components/chart';
-import AlertMessage from '../components/alert';
-import CreationDateFilter from '../components/creationDateFilter';
+import Chart from '../components/chart.jsx';
+import AlertMessage from '../components/alert.jsx';
+import CreationDateFilter from '../components/creationDateFilter.jsx';
 
 const ViewMode = () => {
 	const location = useLocation().pathname;
@@ -21,11 +22,11 @@ const ViewMode = () => {
 	
 	return (
 		<>
-		<AlertMessage location={location} />
-		<CreationDateFilter />
-		<div className="d-flex flex-wrap justify-content-center mt-5">
-			{ chartsToRender.map((chart, index) => <Chart key={index} options={chart.options} location={location} date={chart.date}/>) }
-		</div>
+			<AlertMessage location={location} />
+			<CreationDateFilter />
+			<div className="d-flex flex-wrap justify-content-center mt-5">
+				{ chartsToRender.map((chart, index) => <Chart key={index} options={chart.options} location={location} date={chart.date}/>) }
+			</div>
 		</>
 	)
 }
