@@ -1,8 +1,8 @@
 import _ from 'lodash';
-
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
+
 import { updateChart } from '../../slices/chartReducer';
 import { updateChartModalShow } from '../../slices/modalsReducer';
 import ColorPicker from '../colorPicker';
@@ -17,6 +17,7 @@ const ChangeModal = (props) => {
 	let newChartTitle;
 	let newChartType;
 	let chartData = [];
+	let newChartColors = [];
 	if (updatingChart !== '') {
 		newChartTitle = updatingChart.options.title.text;
 		newChartType = updatingChart.options.chart.type
@@ -31,18 +32,15 @@ const ChangeModal = (props) => {
 		newChartType = e.target.value;
 	}
 
-	const newChartColors = [];
-
-	const colorHandler = (e, index) => {
+	const setNewChartColor = (e, index) => {
 		newChartColors[index] = e;
 	}
 	
-	const chartDataHandler = (e, index) => {
+	const setNewChartParameterName = (e, index) => {
 		chartData[index].name = e.target.value;
 	}
 
-	const changeChartParameters = () => {
-		//const { id } = updatingChart;
+	const changeChart = () => {
 		const { id, options } = _.cloneDeep(updatingChart);
 		options.title.text = newChartTitle;
 		options.chart.type = newChartType;
@@ -52,6 +50,7 @@ const ChangeModal = (props) => {
 				serie['color'] = newChartColors[index];
 			}
 		});
+		newChartColors = [];
 		dispatch(updateChart({id, options}));
 		dispatch(updateChartModalShow());
 	}
@@ -88,7 +87,7 @@ const ChangeModal = (props) => {
 								<div key={index}>
 									<hr />
 									<Form.Label className="text-primary">Parameter name - {serie.name}</Form.Label>
-									<InputGroup className="mb-3" onChange={(e) => chartDataHandler(e, index)}>
+									<InputGroup className="mb-3" onChange={(e) => setNewChartParameterName(e, index)}>
 										<Form.Control 
 											placeholder="Enter new parameter name"
 											aria-label="chartName"
@@ -96,7 +95,7 @@ const ChangeModal = (props) => {
 									</InputGroup>
 									<Form.Label className="text-primary">Select new parameter color</Form.Label>
 									<div className="colorPicker mb-3">
-										<ColorPicker color={serie['color']} onChange={(e) => colorHandler(e, index)}/>
+										<ColorPicker color={serie['color']} onChange={(e) => setNewChartColor(e, index)}/>
 									</div>
 								</div>
 							)}
@@ -107,7 +106,7 @@ const ChangeModal = (props) => {
         <Button variant="info" onClick={() => dispatch(updateChartModalShow())}>
           Cancel
         </Button>
-        <Button variant="danger" onClick={changeChartParameters}>
+        <Button variant="danger" onClick={changeChart}>
           Save Changes
         </Button>
       </Modal.Footer>
