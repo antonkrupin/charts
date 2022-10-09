@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import { createSlice, current } from '@reduxjs/toolkit';
-import { updateChartModalShow, deleteChartModalShow } from './modalsReducer';
+import { createSlice } from '@reduxjs/toolkit';
+import { updateChartModalShow, deleteChartModalShow } from './modalsReducer.js';
 
 const initialState = {
 	charts: [],
@@ -17,7 +17,7 @@ const chartSlice = createSlice({
 		addChart: (state, action) => {
 			const id = _.uniqueId();
 			const { title, type, series, date } = action.payload;
-			state.charts.push({
+			state.charts.unshift({
 				id,
 				date,
 				options: {
@@ -105,3 +105,5 @@ export const {
 } = chartSlice.actions;
 
 export default chartSlice.reducer;
+
+
