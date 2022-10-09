@@ -26,6 +26,6 @@ export const {
 	addChartModalShow,
 	deleteChartModalShow,
 	updateChartModalShow,
- } = modalsSlice.actions;
+} = modalsSlice.actions;
 
 export default modalsSlice.reducer;
