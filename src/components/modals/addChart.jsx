@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
 import { Modal, Button, Form, InputGroup, Overlay } from 'react-bootstrap';
+import axios from 'axios';
 import DatePicker from 'react-date-picker';
 
 import { addChart, addDate } from '../../slices/chartReducer';
@@ -11,6 +11,7 @@ import '../../styles/datePicker.css';
 
 const AddChartModal = () => {
 	const target = useRef(null);
+	
 	const dispatch = useDispatch();
   
 	const isAddChartModalShow = useSelector((state) => state.modals.isAddChartModalShow);
@@ -20,8 +21,6 @@ const AddChartModal = () => {
 	const [type, setChartType] = useState('');
 
 	const [chartData, setChartData] = useState([]);
-
-	const [parametersCount, setParametersCount] = useState([]);
 
 	const [parametersNames, setParametersNames] = useState([]);
 
@@ -34,34 +33,35 @@ const AddChartModal = () => {
 		return response.data.split('\n').filter((el) => el !== '').map((el) => Number(el));
 	}
 
-	const handleParametersNames = (e) => {
+	const chartParametersNames = (e) => {
 		setParametersNames([...parametersNames, e.target.value]);
 	}
 
-	const handleParametersCount = (e) => {
-		const parametersCount = Number(e.target.value);
-		const parametersValues = [];
-		setShowOverlayTooltip(!showOverlayTooltip);
+	const chartParametersCount = (e) => {
+		const addBtn = document.querySelector('#addBtn');
+		addBtn.classList.add('disabled');
+
 		const result = [];
+		const parametersCount = Number(e.target.value);
+		setShowOverlayTooltip(!showOverlayTooltip);
 		for (let i = 0; i < parametersCount; i += 1) {
-			parametersValues.push('1');
 			result.push(getRandomData());
 		}
+
 		Promise.all(result).then((data) => {
-			const addBtn = document.querySelector('#addBtn');
 			addBtn.classList.remove('disabled');
 			setShowOverlayTooltip(false);
 			setChartData(data);
 		});
-		setParametersCount(parametersValues);
 	}
 
 	const createChart = () => {
-		setParametersCount([]);
 		const date = creationDate.toLocaleDateString('ru')
 		setCreationDate(new Date());
-		dispatch(addChart({title, type, chartData, parametersNames, date}));
+		const series = parametersNames.map((name, index) => ({name, data:chartData[index]}));
+		dispatch(addChart({title, type, series, date}));
 		dispatch(addDate({date}));
+		setChartData([]);
 		setParametersNames([]);
 		dispatch(addChartModalShow());
 	}
@@ -99,7 +99,7 @@ const AddChartModal = () => {
 					</Form.Group>
           <Form.Group>
 						<Form.Label className="text-primary">Enter the number of chart parameters</Form.Label>
-						<InputGroup className="mb-3" onChange={handleParametersCount}>
+						<InputGroup className="mb-3" onChange={chartParametersCount}>
 							<Form.Control
 								placeholder="Enter parameters Count"
 								aria-label="parametersCount"
@@ -108,9 +108,9 @@ const AddChartModal = () => {
 					</Form.Group>
           <Form.Group>
 					{
-            parametersCount.map((parameter, index) => 
+            chartData.map((parameter, index) => 
             <InputGroup key={index} className="mb-3">
-              <Form.Control onBlur={handleParametersNames} placeholder='Enter Parameter name' />
+              <Form.Control onBlur={chartParametersNames} placeholder='Enter Parameter name' />
             </InputGroup>)
           }
 					</Form.Group>
@@ -124,23 +124,23 @@ const AddChartModal = () => {
           Add Chart
         </Button>
 				<Overlay target={target.current} show={showOverlayTooltip} placement="right">
-        {({ placement, arrowProps, show: _show, popper, ...props }) => (
-          <div
-            {...props}
-            style={{
-              position: 'relative',
-              backgroundColor: 'rgba(144, 238, 144, 0.85)',
-              padding: '2px 10px',
-              color: 'white',
-              borderRadius: 3,
-							zIndex: 1000000,
-              ...props.style,
-            }}
-          >
-            Wait, while random chart data generated.
-          </div>
-        )}
-      </Overlay>
+					{({ placement, arrowProps, show: _show, popper, ...props }) => (
+						<div
+							{...props}
+							style={{
+								position: 'relative',
+								backgroundColor: 'rgba(144, 238, 144, 0.85)',
+								padding: '2px 10px',
+								color: 'white',
+								borderRadius: 3,
+								zIndex: 1000000,
+								...props.style,
+							}}
+						>
+							Wait, while random chart data generated.
+						</div>
+					)}
+      	</Overlay>
       </Modal.Footer>
   </Modal>
   )
