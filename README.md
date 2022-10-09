@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/f455f36f2f329004cf86/maintainability)](https://codeclimate.com/github/antonkrupin/charts/maintainability)
+
 ## Available Scripts
 
 In the project directory, you can run:
