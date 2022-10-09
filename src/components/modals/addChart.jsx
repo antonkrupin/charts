@@ -4,8 +4,8 @@ import { Modal, Button, Form, InputGroup, Overlay } from 'react-bootstrap';
 import axios from 'axios';
 import DatePicker from 'react-date-picker';
 
-import { addChart, addDate } from '../../slices/chartReducer';
-import { addChartModalShow } from '../../slices/modalsReducer';
+import { addChart, addDate } from '../../slices/chartReducer.js';
+import { addChartModalShow } from '../../slices/modalsReducer.js';
 
 import '../../styles/datePicker.css';
 
@@ -66,13 +66,13 @@ const AddChartModal = () => {
 		dispatch(addChartModalShow());
 	}
 
-  return (
-    <Modal show={isAddChartModalShow} onHide={() => dispatch(addChartModalShow())}>
-      <Modal.Header closeButton>
-        <Modal.Title>Create Chart</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form>
+	return (
+		<Modal show={isAddChartModalShow} onHide={() => dispatch(addChartModalShow())}>
+			<Modal.Header closeButton>
+				<Modal.Title>Create Chart</Modal.Title>
+			</Modal.Header>
+			<Modal.Body>
+				<Form>
 					<Form.Group>
 						<Form.Label className="text-primary">Chart name</Form.Label>
 						<InputGroup onChange={(e) => setChartTitle(e.target.value)} >
@@ -86,7 +86,7 @@ const AddChartModal = () => {
 						<Form.Label className="text-primary">Chart creation date</Form.Label>
 						<DatePicker className="m-3" onChange={setCreationDate} value={creationDate} />
 					</Form.Group>
-          <Form.Group>
+					<Form.Group>
 						<Form.Label className="text-primary">Select Chart type</Form.Label>
 						<Form.Select className="mb-3" aria-label="Select Chart Type" onChange={(e) => setChartType(e.target.value)}>
 							<option>Select chart type</option>
@@ -97,7 +97,7 @@ const AddChartModal = () => {
 							<option>pie</option>
 						</Form.Select>
 					</Form.Group>
-          <Form.Group>
+					<Form.Group>
 						<Form.Label className="text-primary">Enter the number of chart parameters</Form.Label>
 						<InputGroup className="mb-3" onChange={chartParametersCount}>
 							<Form.Control
@@ -106,24 +106,25 @@ const AddChartModal = () => {
 							/>
 						</InputGroup>
 					</Form.Group>
-          <Form.Group>
-					{
-            chartData.map((parameter, index) => 
-            <InputGroup key={index} className="mb-3">
-              <Form.Control onBlur={chartParametersNames} placeholder='Enter Parameter name' />
-            </InputGroup>)
-          }
+					<Form.Group>
+						{
+							chartData.map((parameter, index) => 
+								<InputGroup key={index} className="mb-3">
+									<Form.Control onBlur={chartParametersNames} placeholder='Enter Parameter name' />
+								</InputGroup>)
+						}
 					</Form.Group>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={() => dispatch(addChartModalShow())}>
+				</Form>
+			</Modal.Body>
+			<Modal.Footer>
+				<Button variant="secondary" onClick={() => dispatch(addChartModalShow())}>
           Close
-        </Button>
-        <Button id="addBtn" className="disabled" variant="primary" onClick={createChart} ref={target}>
+				</Button>
+				<Button id="addBtn" className="disabled" variant="primary" onClick={createChart} ref={target}>
           Add Chart
-        </Button>
+				</Button>
 				<Overlay target={target.current} show={showOverlayTooltip} placement="right">
+					{ /* eslint-disable-next-line no-unused-vars*/ }
 					{({ placement, arrowProps, show: _show, popper, ...props }) => (
 						<div
 							{...props}
@@ -140,10 +141,10 @@ const AddChartModal = () => {
 							Wait, while random chart data generated.
 						</div>
 					)}
-      	</Overlay>
-      </Modal.Footer>
-  </Modal>
-  )
+				</Overlay>
+			</Modal.Footer>
+		</Modal>
+	)
 };
 
 export default AddChartModal;
