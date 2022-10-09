@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
-import { deleteChartModalShow, updateChartModalShow } from '../slices/modalsReducer';
+import { deleteChartModalShow, updateChartModalShow } from '../slices/modalsReducer.js';
 
 import '../styles/chart.css';
 
@@ -16,9 +16,9 @@ const Chart = (props) => {
 	let changeAndDeleteButtons;
 	if (location === '/settings') {
 		changeAndDeleteButtons = (
-			<div>
-			<Button onClick={() => dispatch(updateChartModalShow(id))} className="m-2" variant="info">Change</Button>
-			<Button onClick={() => dispatch(deleteChartModalShow(id))} className="m-2" variant="danger">Delete</Button>
+			<div className="d-flex justify-content-xl-start justify-content-lg-start justify-content-md-start justify-content-sm-center justify-content-center">
+				<Button onClick={() => dispatch(updateChartModalShow(id))} className="m-2" variant="info">Change</Button>
+				<Button onClick={() => dispatch(deleteChartModalShow(id))} className="m-2" variant="danger">Delete</Button>
 			</div>
 		)
 	}
