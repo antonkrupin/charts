@@ -1,6 +1,6 @@
 # Single Page Application for create and change charts
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This application uses https://www.random.org/ to generate random sequences of numbers. This sequences uses for build charts.
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/f455f36f2f329004cf86/maintainability)](https://codeclimate.com/github/antonkrupin/charts/maintainability)
 
