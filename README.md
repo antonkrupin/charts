@@ -10,4 +10,4 @@ Clone repository.
 
 Run `npm install` to install application
 
-Run ### `npm start` to run application on http://localhost:3000
+Run `npm start` to run application on http://localhost:3000
