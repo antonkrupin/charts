@@ -8,7 +8,7 @@ const initialState = {
 	chartsFilteredByDate: [],
 	chartForChange: '',
 	chartForDeleteId: '',
-}
+};
 
 const chartSlice = createSlice({
 	name: 'chart',
@@ -32,7 +32,7 @@ const chartSlice = createSlice({
 					},
 					series: series,
 				}
-			})
+			});
 		},
 		addDate: (state, action) => {
 			const { date } = action.payload;
@@ -57,14 +57,14 @@ const chartSlice = createSlice({
 				if (chart.id === id) {
 					chart.options = options;
 				}
-			})
+			});
 		},
 		deleteChart: (state, action) => {
 			state.charts.forEach((chart, index) => {
 				if (chart.id === action.payload) {
 					state.charts.splice(index, 1);
 				}
-			})
+			});
 		},
 		deleteDate: (state, action) => {
 			const id = action.payload;
@@ -73,7 +73,7 @@ const chartSlice = createSlice({
 				if (chart.id === id) {
 					date = chart.date;
 				}
-			})
+			});
 			state.creationDates[date] -= 1;
 			if (state.creationDates[date] === 0) {
 				delete state.creationDates[date];
@@ -105,5 +105,3 @@ export const {
 } = chartSlice.actions;
 
 export default chartSlice.reducer;
-
-
