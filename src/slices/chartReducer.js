@@ -1,6 +1,6 @@
 import _ from 'lodash';
-
 import { createSlice } from '@reduxjs/toolkit';
+
 import { updateChartModalShow, deleteChartModalShow } from './modalsReducer.js';
 
 const initialState = {
