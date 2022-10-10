@@ -20,9 +20,6 @@ const Settings = () => {
 	return (
 		<>
 			<AlertMessage location={location} />
-			{/*<div className="d-flex sticky-top justify-content-center m-5">
-				<Button variant="primary" onClick={() => dispatch(addChartModalShow())} >Add chart</Button>
-	</div>*/}
 			<AddChartBtn onClick={() => dispatch(addChartModalShow())}/>
 			<div className="d-flex flex-wrap justify-content-center">
 				{ charts.map((chart) => <Chart key={chart.id} options={chart.options} id={chart.id} location={location} date={chart.date}/>) }
