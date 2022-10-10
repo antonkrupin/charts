@@ -1,13 +1,15 @@
 import _ from 'lodash';
+
 import { createSlice } from '@reduxjs/toolkit';
 import { updateChartModalShow, deleteChartModalShow } from './modalsReducer.js';
 
 const initialState = {
-	charts: [],
-	creationDates: {},
+	charts: JSON.parse(localStorage.getItem('charts')) || [],
+	creationDates: JSON.parse(localStorage.getItem('creationDates')) || {},
 	chartsFilteredByDate: [],
 	chartForChange: '',
 	chartForDeleteId: '',
+	sessionPrefix: Date.now(),
 };
 
 const chartSlice = createSlice({
@@ -15,9 +17,18 @@ const chartSlice = createSlice({
 	initialState,
 	reducers: {
 		addChart: (state, action) => {
-			const id = _.uniqueId();
+			const id = _.uniqueId(state.sessionPrefix);
+
 			const { title, type, series, date } = action.payload;
-			state.charts.unshift({
+			// const test = localStorage.getItem('charts');
+			/*if (!localStorage.getItem('sessionPrefix')) {
+				localStorage.setItem('sesionPrefix', id);
+			}*/
+			if (!localStorage.getItem('charts')) {
+				localStorage.setItem('charts', JSON.stringify([]));
+			}
+			const charts = JSON.parse(localStorage.getItem('charts'));
+			charts.unshift({
 				id,
 				date,
 				options: {
@@ -33,14 +44,44 @@ const chartSlice = createSlice({
 					series: series,
 				}
 			});
+			localStorage.setItem('charts', JSON.stringify(charts));
+			state.charts = JSON.parse(localStorage.getItem('charts'));
+			/*state.charts.unshift({
+				id,
+				date,
+				options: {
+					accessibility: {
+						enabled: false,
+					},
+					chart: {
+						type: type,
+					},
+					title: {
+						text: title,
+					},
+					series: series,
+				}
+			});*/
 		},
 		addDate: (state, action) => {
+			if (!localStorage.getItem('creationDates')) {
+				localStorage.setItem('creationDates', JSON.stringify({}));
+			}
 			const { date } = action.payload;
-			if (date in state.creationDates) {
+			
+			const creationDates = JSON.parse(localStorage.getItem('creationDates'));
+			if (date in creationDates) {
+				creationDates[date] += 1;
+			} else {
+				creationDates[date] = 1;
+			}
+			localStorage.setItem('creationDates', JSON.stringify(creationDates));
+			state.creationDates = JSON.parse(localStorage.getItem('creationDates'));
+			/* if (date in state.creationDates) {
 				state.creationDates[date] += 1;
 			} else {
 				state.creationDates[date] = 1;
-			}
+			} */
 		},
 		filterChartsByDate: (state, action) => {
 			const date = action.payload;
@@ -52,19 +93,37 @@ const chartSlice = createSlice({
 			});
 		},
 		updateChart: (state, action) => {
+			const charts = JSON.parse(localStorage.getItem('charts'));
 			const { id, options } = action.payload;
-			state.charts.forEach((chart) => {
+			charts.forEach((chart) => {
 				if (chart.id === id) {
 					chart.options = options;
 				}
 			});
+			localStorage.setItem('charts', JSON.stringify(charts));
+			state.charts = JSON.parse(localStorage.getItem('charts'));
+
+			//state.creationDates = JSON.parse(localStorage.getItem('creationDates'));
+			/*state.charts.forEach((chart) => {
+				if (chart.id === id) {
+					chart.options = options;
+				}
+			});*/
 		},
 		deleteChart: (state, action) => {
-			state.charts.forEach((chart, index) => {
+			const charts = JSON.parse(localStorage.getItem('charts'));
+			charts.forEach((chart, index) => {
+				if (chart.id === action.payload) {
+					charts.splice(index, 1);
+				}
+			});
+			localStorage.setItem('charts', JSON.stringify(charts));
+			state.charts = JSON.parse(localStorage.getItem('charts'))
+			/* state.charts.forEach((chart, index) => {
 				if (chart.id === action.payload) {
 					state.charts.splice(index, 1);
 				}
-			});
+			}); */
 		},
 		deleteDate: (state, action) => {
 			const id = action.payload;
@@ -74,10 +133,20 @@ const chartSlice = createSlice({
 					date = chart.date;
 				}
 			});
-			state.creationDates[date] -= 1;
+
+			/* state.creationDates[date] -= 1;
 			if (state.creationDates[date] === 0) {
 				delete state.creationDates[date];
+			} */
+			// test
+			const creationDates = JSON.parse(localStorage.getItem('creationDates'));
+			creationDates[date] -= 1;
+			if (!creationDates[date]) {
+				delete creationDates[date];
 			}
+			localStorage.setItem('creationDates', JSON.stringify(creationDates));
+			state.creationDates = JSON.parse(localStorage.getItem('creationDates'));
+			// test
 		},
 	},
 	extraReducers: (builder) => {
