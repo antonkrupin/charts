@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import Chart from '../components/chart.jsx';
-import AlertMessage from '../components/alert.jsx';
+import AlertMessage from '../components/alertMessage.jsx';
 import CreationDateFilter from '../components/creationDateFilter.jsx';
 
 const ViewMode = () => {

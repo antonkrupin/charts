@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 import { addChartModalShow } from '../slices/modalsReducer.js';
 import Chart from '../components/chart.jsx';
-import AlertMessage from '../components/alert.jsx';
+import AlertMessage from '../components/alertMessage.jsx';
 import AddChartModal from '../components/modals/addChart.jsx';
 import DeleteModal from '../components/modals/deleteChart.jsx';
 import ChangeModal from '../components/modals/changeChart.jsx';
