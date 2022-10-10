@@ -1,13 +1,21 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
-const ClearLocalStorageBtn = () => {
+const ClearLocalStorageBtn = (props) => {
 	const clearLocalStorage = () => {
 		window.location.reload();
 		localStorage.clear()
 	}
+	let button;
+	if (props.location === '/settings') {
+		button = (
+			<Button variant="danger" onClick={clearLocalStorage}>Clear LocalStorage</Button>
+		)
+	}
 	return (
-		<Button variant="danger" onClick={clearLocalStorage}>Clear LocalStorage</Button>
+		<>
+			{ button }
+		</>
 	)
 };
 
