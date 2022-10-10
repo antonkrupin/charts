@@ -68,6 +68,12 @@ const AddChartModal = () => {
 		dispatch(addChartModalShow());
 	}
 
+	const closeModal = () => {
+		setChartData([]);
+		setParametersNames([]);
+		dispatch(addChartModalShow())
+	}
+
 	return (
 		<Modal show={isAddChartModalShow} onHide={() => dispatch(addChartModalShow())}>
 			<Modal.Header closeButton>
@@ -109,22 +115,23 @@ const AddChartModal = () => {
 				</Form>
 			</Modal.Body>
 			<Modal.Footer>
-				<Button variant="secondary" onClick={() => dispatch(addChartModalShow())}>
+				<Button variant="secondary" onClick={closeModal}>
           Close
 				</Button>
 				<Button id="addBtn" className="disabled" variant="primary" onClick={createChart} ref={target}>
           Add Chart
 				</Button>
-				<Overlay target={target.current} show={showOverlayTooltip} placement="right">
+				<Overlay target={target.current} show={showOverlayTooltip} placement="top">
 					{ /* eslint-disable-next-line no-unused-vars*/ }
 					{({ placement, arrowProps, show: _show, popper, ...props }) => (
 						<div
 							{...props}
 							style={{
 								position: 'relative',
+								width: '100px',
 								backgroundColor: 'rgba(144, 238, 144, 0.85)',
 								padding: '2px 10px',
-								color: 'white',
+								color: 'black',
 								borderRadius: 3,
 								zIndex: 1000000,
 								...props.style,
