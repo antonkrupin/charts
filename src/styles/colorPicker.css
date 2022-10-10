@@ -2,3 +2,9 @@
   height: 10vh;
 	width: 100%;
 }
+
+@media (max-width: 575px) {
+  .colorPicker .react-colorful {
+    height: 20vh;
+  }
+}
