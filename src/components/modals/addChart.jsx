@@ -58,7 +58,8 @@ const AddChartModal = () => {
 	}
 
 	const createChart = () => {
-		const date = creationDate.toLocaleDateString('ru')
+		const date = creationDate.toLocaleDateString('ru');
+
 		setCreationDate(new Date());
 		const series = parametersNames.map((name, index) => ({name, data:chartData[index]}));
 		dispatch(addChart({title, type, series, date}));
