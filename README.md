@@ -16,3 +16,6 @@ Run `make start` to run application on http://localhost:3000
 
 ## Working app deployed on Vercel
 https://charts-zeta.vercel.app/
+
+### Application start page
+![Application start page](https://github.com/antonkrupin/charts/raw/master/screenshots/1.jpg)
