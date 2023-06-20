@@ -19,3 +19,11 @@ https://charts-zeta.vercel.app/
 
 ### Application start page
 ![Application start page](https://github.com/antonkrupin/charts/raw/main/screenshots/1.jpg)
+### Create new chart page
+![Create new chart page](https://github.com/antonkrupin/charts/raw/main/screenshots/2.jpg)
+### Create new chart
+![Create new chart](https://github.com/antonkrupin/charts/raw/main/screenshots/3.jpg)
+### Added chart
+![Added chart](https://github.com/antonkrupin/charts/raw/main/screenshots/4.jpg)
+### Charts filtering
+![Charts filtering](https://github.com/antonkrupin/charts/raw/main/screenshots/5.jpg)
