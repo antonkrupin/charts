@@ -14,5 +14,5 @@ Run `make install` to install application
 
 Run `make start` to run application on http://localhost:3000
 
-## Working app deployed on Heroku
-https://chartsbuilder.herokuapp.com/
+## Working app deployed on Vercel
+[https://chartsbuilder.herokuapp.com/](https://charts-zeta.vercel.app/)https://charts-zeta.vercel.app/
